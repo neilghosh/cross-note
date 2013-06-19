@@ -6,11 +6,7 @@ import com.googlecode.objectify.annotation.Id;
 import java.util.Date;
 
 /**
- * Created with IntelliJ IDEA.
- * User: saghosh
- * Date: 14/06/13
- * Time: 4:27 PM
- * To change this template use File | Settings | File Templates.
+ * Entity POJO class used by Objectify to persist data in bigTable
  */
 @Entity
 public class Note {

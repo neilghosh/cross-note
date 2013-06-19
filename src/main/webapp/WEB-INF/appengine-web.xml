@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+    <!-- create this unique id in appengine console in web-->
     <application>testjavaneil</application>
+    <!-- I only keep only one version during dev and keep overwriting it. -->
     <version>1</version>
+    <!-- I have no idea about it -->
     <threadsafe>true</threadsafe>
 </appengine-web-app>
