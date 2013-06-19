@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<form method=post action="/webnotes">
+    <input name=note.text size=20 type=text/>
+    <input type=submit value="Add Note">
+</form>
+<br>
+
+<table>
+    <tr style="background:grey">
+        <th>Date</th>
+        <th>Note</th>
+    </tr>
+    @Repeat(items=notes, var="note")
+    <tr>
+        <td>${note.date}</td>
+        <td>${note.text}</td>
+    </tr>
+</table>
+</body>
+</html>
