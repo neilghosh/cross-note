@@ -10,3 +10,4 @@ This is a sample application demonstrating the following technologies
 3.Maven
 4.Google Objectify
 5.Google Appengine for JAVA
+6.Google AppEngine Channel API
