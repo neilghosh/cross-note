@@ -33,6 +33,13 @@ public class MyGuiceServletConfig extends GuiceServletContextListener {
                         bind(com.neil.NotebookServlet.class).in(Singleton.class);
                         //Analogous to typcial servlet URL mappings
                         serve("/servlet").with(com.neil.NotebookServlet.class);
+
+                        bind(com.neil.TrackerServlet.class).in(Singleton.class);
+                        serve("/_ah/channel/connected/").with(com.neil.TrackerServlet.class);
+
+                        bind(com.neil.TrackerServlet1.class).in(Singleton.class);
+                        serve("/_ah/channel/disconnected/").with(com.neil.TrackerServlet1.class);
+
                     }
                 }
         );

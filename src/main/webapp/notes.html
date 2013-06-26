@@ -6,24 +6,95 @@
 <html>
 <head>
     <title></title>
+    <script type="text/javascript" src="/_ah/channel/jsapi"></script>
 </head>
 <body>
 <form method=post action="/webnotes">
     <input name=note.text size=20 type=text/>
     <input type=submit value="Add Note">
 </form>
+<button onclick="postnote()">Update</button>
 <br>
+<div>
+    <div>
+        <table id="noteTable">
+            <tr style="background:grey">
+                <th>Date</th>
+                <th>Note</th>
+            </tr>
+            @Repeat(items=notes, var="note")
+            <tr>
+                <td>${note.date}</td>
+                <td>${note.text}</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <table id="userList">
+            <tr>
+                <th style="background:grey">Client ID</th>
+            </tr>
+        </table>
+    </div>
+</div>
+<script language="JavaScript">
 
-<table>
-    <tr style="background:grey">
-        <th>Date</th>
-        <th>Note</th>
-    </tr>
-    @Repeat(items=notes, var="note")
-    <tr>
-        <td>${note.date}</td>
-        <td>${note.text}</td>
-    </tr>
-</table>
+    //Function called when update button us pressed
+    //This will maken an AJAX POST request
+    //To the webservice created using sitebricks 
+    postnote = function(){
+        var noteObj = new Object();
+        noteObj.text=document.forms[0]['note.text'].value;
+        sendMessage('/notes','POST',JSON.stringify(noteObj));
+    };
+    //Generic method for sending any Ajax request 
+    sendMessage = function(path, method,param) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, path, true);
+        //Callback when response is received from the server
+        xhr.onload = function () {
+            console.log(this.responseText);
+            document.forms[0]['note.text'].value="";
+            };
+        xhr.send(param);
+        };
+
+    
+    onOpened = function() {
+        sendMessage('/notes','GET','command=open');
+    };
+
+    onMessage = function(message){
+        //When message is recived from the server 
+        //Message.data contains the actual string send by the 
+        //Java code
+        //Now convert the JSON string to a Javascript Object
+        var data = eval("(" + message.data + ")");
+        console.log("Received data from Server "+data)
+        //Adds a new note row in the tables 
+        if(data.command=="note"){
+            insertRow(data.data)
+        }
+    }
+
+    insertRow = function(data){
+        var table=document.getElementById("noteTable");
+        var row=table.insertRow(1);
+        var cell1=row.insertCell(0);
+        var cell2=row.insertCell(1);
+        cell1.innerHTML=new Date(data.date);
+        cell2.innerHTML=data.text;
+    }
+
+    //Opens a channel with server with the given token (provided by the server)
+    //Internally it keeps polling the server for new messages
+    channel = new goog.appengine.Channel('${token}');
+    socket = channel.open();
+    //Define all the listeners
+    socket.onopen = onOpened;
+    socket.onmessage = onMessage;
+    socket.onerror = onError;
+    socket.onclose = onClose;
+</script>
 </body>
 </html>

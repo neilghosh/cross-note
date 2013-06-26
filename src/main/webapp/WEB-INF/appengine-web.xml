@@ -6,4 +6,7 @@
     <version>1</version>
     <!-- I have no idea about it -->
     <threadsafe>true</threadsafe>
+    <inbound-services>
+        <service>channel_presence</service>
+    </inbound-services>
 </appengine-web-app>

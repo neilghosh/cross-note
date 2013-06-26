@@ -49,12 +49,13 @@
     <artifactId>appengine-maven-plugin</artifactId>
     <version>1.8.1</version>
     <configuration>
-        <!--
+
         <jvmFlags>
-            <jvmFlag>-Xdebug</jvmFlag>
-            <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=5000,server=y,suspend=n</jvmFlag>
+            <jvmFlag>-Dappengine.generated.dir=/tmp/blabla</jvmFlag>
+            <!-- <jvmFlag>-Xdebug</jvmFlag>
+            <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=5000,server=y,suspend=n</jvmFlag> -->
         </jvmFlags>
-        -->
+
     </configuration>
    </plugin>
   </plugins>
